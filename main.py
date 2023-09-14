@@ -133,8 +133,22 @@ async def main():
         if upgrade_result != enums.UpgradeResult.FAILED:
             successful_wallets += 1
 
+        utils.random_sleep()
+
     logging.info(f'Successfully upgraded {successful_wallets}/{total_wallets} wallets')
 
 
 if __name__ == '__main__':
+    min_sleep_time_str = input('Enter min sleep time in seconds [Default - 60]: ')
+    max_sleep_time_str = input('Enter max sleep time in seconds [Default - 180]: ')
+
+    if min_sleep_time_str:
+        utils.random_sleep.min_sleep_time = float(min_sleep_time_str)
+    if max_sleep_time_str:
+        max_sleep_time = float(max_sleep_time_str)
+        utils.random_sleep.max_sleep_time = max(
+            max_sleep_time,
+            60
+        )
+
     asyncio.run(main())

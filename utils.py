@@ -1,3 +1,7 @@
+import random
+import time
+
+from logger import logging
 from starknet_py.contract import Contract
 from starknet_py.net.account.account import Account
 from starknet_py.net.gateway_client import GatewayClient
@@ -60,3 +64,18 @@ def int_hash_to_hex(hast_int: int, hash_lenght: int = 64) -> str:
     hash_hex = hex(hast_int)[2:]
     hash_hex = hash_hex.rjust(hash_lenght, '0')
     return f'0x{hash_hex}'
+
+
+def sleep(sleep_time: float):
+    logging.info(f'Sleeping for {round(sleep_time, 2)} seconds. If you want to skip this, press Ctrl+C')
+    try:
+        time.sleep(sleep_time)
+    except KeyboardInterrupt:
+        logging.info('[Sleep] Skipping sleep')
+
+
+def random_sleep():
+    min_sleep_time = getattr(random_sleep, 'min_sleep_time', 60)
+    max_sleep_time = getattr(random_sleep, 'max_sleep_time', 180)
+    sleep_time = round(random.uniform(min_sleep_time, max_sleep_time), 2)
+    sleep(sleep_time)
